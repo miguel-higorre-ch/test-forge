@@ -1,0 +1,32 @@
+{
+  "name": "test-forge",
+  "version": "1.0.0",
+  "description": "A multiplatform CLI scaffolding tool for test automation frameworks",
+  "type": "module",
+  "bin": {
+    "test-forge": "./bin/test-forge.js"
+  },
+  "scripts": {
+    "start": "node bin/test-forge.js",
+    "dev": "node --watch bin/test-forge.js"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12",
+    "ora": "^7.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "cli",
+    "scaffold",
+    "test-automation",
+    "selenium",
+    "playwright",
+    "cypress",
+    "generator"
+  ],
+  "author": "Test Forge",
+  "license": "MIT"
+}

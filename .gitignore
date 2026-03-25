@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# npm logs
+npm-debug.log*
+
+# Local sandbox/output artifacts
+mnt/
+tmp-smoke/
+
+# Generated scaffold projects created from this repo root
+my-test-project*/
+
+# Environment files
+.env
+.env.*
+
+# Coverage and reports
+coverage/
+.nyc_output/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
