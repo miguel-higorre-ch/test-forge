@@ -1,77 +1,74 @@
-# Test Forge
+<div align="center">
+  <h1>🛠️ Test Forge</h1>
+  <p><strong>The ultimate CLI to scaffold modern test automation stacks in seconds.</strong></p>
 
-`test-forge` is a Node.js CLI that scaffolds starter projects for test automation stacks. It currently supports:
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2018.0.0-brightgreen)](https://nodejs.org)
+  [![npm Version](https://img.shields.io/badge/npm-%3E%3D%209.0.0-brightgreen)](https://www.npmjs.com)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+</div>
 
-- Cypress with `JavaScript` or `TypeScript`
-- Playwright with `JavaScript`, `TypeScript`, or `Python`
-- Selenium with `JavaScript`, `Python`, or `Java`
+<hr />
 
-The CLI asks for a project name, framework, and language, then writes a framework-specific starter project into a new directory under the current working directory.
+## ✨ Overview
 
-## Technology Choice
+`test-forge` is an interactive, lightning-fast Node.js CLI tool designed to scaffold production-ready starter projects for various test automation frameworks. Whether you're setting up Cypress, Playwright, or Selenium, `test-forge` generates a fully configured boilerplate in your preferred programming language, saving you hours of tedious setup.
 
-Node.js (ESM) with three runtime dependencies:
+## 🚀 Features
 
-| Package | Role |
-| --- | --- |
-| `inquirer` v9 | Interactive terminal prompts (list, input, validation) |
-| `chalk` v5 | Cross-platform terminal color output |
-| `ora` v7 | Animated spinner during file generation |
+- **Interactive Prompts**: Beautiful terminal UI powered by `inquirer` and `chalk`.
+- **Multi-Framework Support**: Seamlessly scaffold Cypress, Playwright, and Selenium projects.
+- **Multi-Language Support**: Choose between JavaScript, TypeScript, Python, and Java.
+- **Best Practices Included**: Generated projects come with Page Object Models (POM), sensible CI configs, and foundational tests out of the box.
+- **Zero Friction**: Built with Node.js ES Modules. No complex compilation steps required.
 
-Node.js was chosen because it's natively multiplatform, ships ES Modules, handles file I/O with zero friction via `node:fs`, and the `inquirer` + `chalk` ecosystem is the industry gold standard for CLI tooling. No compilation step needed.
+## 🧩 Supported Matrix
 
-## Requirements
+| Framework | Supported Languages |
+| :--- | :--- |
+| **Cypress** | 🟩 Node (`TypeScript`, `JavaScript`) |
+| **Playwright** | 🟩 Node (`TypeScript`, `JavaScript`), 🟦 Python |
+| **Selenium** | 🟥 Java, 🟦 Python, 🟩 Node (`JavaScript`) |
 
-- Node.js `18+`
-- npm `9+`
+## 📦 Installation & Usage
 
-## Installation & Usage
+Ensure you have **Node.js 18+** and **npm 9+** installed on your system.
 
-### Step 1: Prerequisites
+### Option 1: Global Installation (Recommended)
+
+Installing `test-forge` globally allows you to scaffold test projects from anywhere on your machine.
 
 ```bash
-node --version   # Must be >= 18
-npm --version    # Must be >= 9
+# Clone the repository and navigate into it
+git clone <repository-url> test-forge
+cd test-forge
+
+# Install globally
+npm install -g .
+
+# Now you can run it from any directory:
+test-forge
 ```
 
-### Step 2: Install Dependencies
+### Option 2: Run Locally
+
+If you prefer to run the CLI directly without installing it globally:
 
 ```bash
 cd test-forge
 npm install
-```
-
-### Step 3a: Run Directly
-
-```bash
 node bin/test-forge.js
 ```
 
-### Step 3b: Install Globally
+*(Note for Windows PowerShell users: use `node bin\test-forge.js`)*
 
-```bash
-# From inside the test-forge directory:
-npm install -g .
+## 💻 CLI Walkthrough
 
-# Now run from anywhere:
-test-forge
-```
-
-### Step 3c: Windows (PowerShell)
-
-```powershell
-cd test-forge
-npm install
-node bin\test-forge.js
-# Or after global install:
-test-forge
-```
-
-### Step 4: Walk Through The Prompts
+Running `test-forge` will launch an interactive wizard. Simply follow the prompts:
 
 ```text
   ╔════════════════════════════════════════╗
-  ║         🔧  TEST FORGE  🔧              ║
+  ║         🔧  TEST FORGE  🔧             ║
   ╚════════════════════════════════════════╝
 
 ? Project name: my-awesome-tests
@@ -80,10 +77,6 @@ test-forge
 
 ✔ Project scaffolded successfully!
 
-  Project:   my-awesome-tests
-  Framework: Playwright
-  Language:  TypeScript
-
   Next steps:
   1. cd my-awesome-tests
   2. npm install
@@ -91,167 +84,54 @@ test-forge
   4. npm test
 ```
 
-## Project Structure
+## 🏗️ What Gets Generated?
+
+Every scaffolded project instantly provides:
+- **Framework-specific starting tests** to verify your setup immediately.
+- **Baseline configuration files** (e.g., `playwright.config.ts`, `cypress.config.ts`, `pom.xml`, `pytest.ini`).
+- **Dependency manifests** (`package.json`, `requirements.txt`, etc.).
+- **A project-specific README** outlining how to run and extend your new tests.
+
+> **Note**: Generation is strictly file-based. Dependencies are intentionally left for you to install, ensuring you remain in full control of your environment setup.
+
+## ⚙️ Project Architecture
 
 ```text
 test-forge/
 ├── bin/
-│   └── test-forge.js          ← Entry point / shebang for global install
+│   └── test-forge.js          # CLI entry point / shebang
 ├── src/
-│   ├── index.js               ← Orchestrator: prompts → generator → spinner
-│   ├── prompts/
-│   │   └── prompt.js          ← All inquirer questions & validation
-│   ├── generators/
-│   │   ├── index.js           ← Registry (add new frameworks here)
-│   │   ├── base.generator.js  ← Abstract base: createDir, writeFile helpers
-│   │   ├── cypress.generator.js
-│   │   ├── playwright.generator.js
-│   │   └── selenium.generator.js
-│   ├── templates/
-│   │   ├── cypress.templates.js    ← All file content strings for Cypress
-│   │   ├── playwright.templates.js ← All file content strings for Playwright
-│   │   └── selenium.templates.js   ← All file content strings for Selenium
-│   └── utils/
-│       └── logger.js          ← Banner, success output, next-steps helper
+│   ├── index.js               # Orchestrator (prompts → generator → spinner)
+│   ├── prompts/               # Inquirer questions and validation logic
+│   ├── generators/            # Framework-specific generator classes
+│   ├── templates/             # Raw file content & string templates
+│   └── utils/                 # Helpers (logger, terminal banners)
 └── package.json
 ```
 
-## What Gets Generated Per Framework
+## 🔌 Extending the CLI
 
-### Cypress (TS/JS)
+Adding a new testing framework to `test-forge` is remarkably easy:
 
-```text
-my-project/
-├── cypress/e2e/example.cy.ts
-├── cypress/fixtures/example.json
-├── cypress/support/commands.ts + e2e.ts
-├── cypress.config.ts
-├── tsconfig.json
-├── package.json
-├── .gitignore
-└── README.md
-```
+1. **Create a Generator**: Extend `BaseGenerator` in `src/generators/appium.generator.js`.
+   ```javascript
+   export class AppiumGenerator extends BaseGenerator {
+     async generate({ projectName, language }) { 
+         // Define directories and templates to write
+     }
+   }
+   ```
+2. **Create Templates**: Define your file contents in `src/templates/appium.templates.js`.
+3. **Register It**: Export the generator in `src/generators/index.js` and add the framework to the choices array in `src/prompts/prompt.js`.
 
-- Includes 3 real tests for title, heading, and link validation.
-- `tsconfig.json` is generated for TypeScript only.
-- The generated config includes `baseURL`, viewport, and video settings.
+That's it! The orchestrator will handle the file I/O, spinners, and generation flow.
 
-### Playwright (TS/JS/Python)
+## 📝 Known Constraints
 
-```text
-my-project/
-├── tests/example.spec.ts
-├── tests-examples/demo-todo.spec.ts
-├── playwright.config.ts
-├── package.json / requirements.txt
-└── README.md
-```
+- The CLI is currently interactive only; command-line flags (e.g., `--framework playwright`) are planned for future releases.
+- Automated test suites for the generator output are under development.
+- Setup instructions might require slight manual adjustments depending on your OS shell (e.g., Python virtual environment activation).
 
-- Includes 3 tests using `page.goto()` and `expect()`.
-- Includes demo coverage for screenshots and network interception.
-- The generated config enables multi-browser runs and CI retries.
+## 📄 License
 
-### Selenium Java (Maven/POM)
-
-```text
-my-project/
-├── src/test/java/{pkg}/pages/HomePage.java
-├── src/test/java/{pkg}/tests/HomePageTest.java
-├── src/main/java/{pkg}/utils/DriverManager.java
-├── resources/config.properties
-└── pom.xml
-```
-
-- Uses Page Object Model with `WebDriverWait`.
-- Includes TestNG with 3 `@Test` methods.
-- `pom.xml` includes Selenium 4, TestNG, and WebDriverManager.
-
-### Selenium Python
-
-Selenium Python generates `pytest` + POM with `conftest.py` fixtures, `DriverFactory`, and `requirements.txt`.
-
-### Selenium JavaScript
-
-Selenium JavaScript generates Mocha + Chai + POM with `DriverFactory`, `.mocharc.cjs`, and ESM imports.
-
-## What It Generates
-
-Each generated project includes:
-
-- framework-specific starter tests
-- baseline config files
-- dependency manifests
-- a generated project README
-
-Generation is file-based. The tool does not install dependencies automatically.
-
-## How It Works
-
-1. `bin/test-forge.js` starts the CLI.
-2. `src/index.js` prints the banner and prompts the user.
-3. `src/generators/index.js` resolves the selected framework to a generator instance.
-4. The selected generator writes files from the relevant template module into the target directory.
-5. `src/utils/logger.js` prints follow-up setup steps.
-
-## Supported Matrix
-
-| Framework | Languages |
-| --- | --- |
-| Cypress | TypeScript, JavaScript |
-| Playwright | TypeScript, JavaScript, Python |
-| Selenium | Java, Python, JavaScript |
-
-## Development Notes
-
-- The project uses ECMAScript modules via `"type": "module"` in the root `package.json`.
-- Generators extend `BaseGenerator` and implement `generate({ projectName, language })`.
-- Template modules return raw file contents as strings. If you add a new framework or language, keep template output and logger instructions in sync.
-
-## Extending With A New Framework
-
-Three steps only:
-
-```js
-// 1. Create src/generators/appium.generator.js
-export class AppiumGenerator extends BaseGenerator {
-  async generate({ projectName, language }) { /* ... */ }
-}
-
-// 2. Create src/templates/appium.templates.js
-
-// 3. Register in src/generators/index.js
-import { AppiumGenerator } from './appium.generator.js';
-const GENERATOR_REGISTRY = {
-  // ...existing...
-  Appium: AppiumGenerator,  // one line
-};
-```
-
-Then add `'Appium'` to the choices array in `src/prompts/prompt.js`. That's the entire surface area for extension.
-
-## Extending The CLI
-
-To add a new framework:
-
-1. Create a generator in `src/generators/`.
-2. Create matching templates in `src/templates/` if needed.
-3. Register the generator in `src/generators/index.js`.
-4. Update `FRAMEWORK_LANGUAGES` in `src/prompts/prompt.js`.
-5. Update `getNextSteps()` in `src/utils/logger.js`.
-
-To add a new language to an existing framework:
-
-1. Extend the prompt choices.
-2. Update the framework generator logic.
-3. Add or adjust templates.
-4. Update generated README content and next-step instructions.
-
-## Known Constraints
-
-- The CLI is interactive only; there are no command-line flags yet.
-- There is no automated test suite for the generator output yet.
-- Setup instructions are partly shell-specific, especially for Python virtual environment activation.
-
-## License
-
-MIT
+Distributed under the MIT License. See `LICENSE` for more information.
